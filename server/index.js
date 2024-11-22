@@ -11,12 +11,6 @@ const app = express();
 // api
 app.use("/api/v1/user", userRoute);
 
-app.get("/home", (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: "Hello i am comming from backend",
-  });
-});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
