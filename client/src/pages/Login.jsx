@@ -10,6 +10,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  useLoginUserMutation,
+  useRegisterUserMutation,
+} from "@/features/api/authApi";
 import { useState } from "react";
 
 const Login = () => {
@@ -22,6 +26,25 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const [
+    registerUser,
+    {
+      data: registerData,
+      error: registerError,
+      isLoading: registerIsLoading,
+      isSuccess: registerIsSuccess,
+    },
+  ] = useRegisterUserMutation();
+  const [
+    loginUser,
+    {
+      data: loginUserData,
+      error: loginUserError,
+      isLoading: loginUserIsLoading,
+      isSuccess: loginUserIsSuccess,
+    },
+  ] = useLoginUserMutation();
+
   const changeInputHandlar = (e, type) => {
     const { name, value } = e.target;
     if (type === "signup") {
@@ -30,7 +53,7 @@ const Login = () => {
       setLoginInput({ ...loginInput, [name]: value });
     }
   };
-  const handleRegistration = (type) => {
+  const handleRegistration = async (type) => {
     const inputData = type === "signup" ? SignupInput : loginInput;
     console.log(inputData);
   };
