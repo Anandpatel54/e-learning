@@ -26,13 +26,13 @@ export const authApi = createApi({
         method: "POST",
         body: inputData,
       }),
-      // onQueryStarted hook is used to dispatch actions when a query is successful
+     
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
-          const result = await queryFulfilled; // Wait for query to complete
-          dispatch(userLoggedIn({ user: result.data.user })); // Dispatch user login action
+          const result = await queryFulfilled; 
+          dispatch(userLoggedIn({ user: result.data.user }));
         } catch (error) {
-          // Proper error logging
+        
           console.error("Login failed:", error);
         }
       },
