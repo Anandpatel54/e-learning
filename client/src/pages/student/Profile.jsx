@@ -15,43 +15,64 @@ import { Loader2 } from "lucide-react";
 import Course from "./Course";
 
 const Profile = () => {
-  const isLoading = false;
-  const emrolledCourses = [1,2,3];
+  const isLoading = false; // Set to `true` for demonstration, in a real scenario, fetch user data here
+  const enrolledCourses = [1,2,3]; // Example enrolled courses, you can fetch dynamically
+
   return (
     <div className="max-w-4xl mx-auto my-24 px-4">
-      <h1 className="font-bold text-center text-2xl md:text-left ">PROFILE</h1>
+      <h1 className="font-bold text-center text-2xl md:text-left">PROFILE</h1>
       <div className="flex flex-col md:flex-row items-center md:items-start gap-8 my-5">
         <div className="flex flex-col items-center">
-          <Avatar className="h-24 w-24 md:h-32 md:w-32 mb-4">
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
+          {isLoading ? (
+            <div className="h-32 w-32 bg-gray-300 rounded-full animate-pulse"></div>
+          ) : (
+            <Avatar className="h-24 w-24 md:h-32 md:w-32 mb-4">
+              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+          )}
         </div>
+
         <div>
           <div className="mb-2">
             <h2 className="font-semibold text-gray-900 dark:text-gray-200 ml-2">
               Name:
-              <span className="font-normal text-gray-700 dark:text-gray-300 ml-2">
-                Anand patel
-              </span>
+              {isLoading ? (
+                <div className="w-32 h-4 bg-gray-300 rounded animate-pulse ml-2"></div>
+              ) : (
+                <span className="font-normal text-gray-700 dark:text-gray-300 ml-2">
+                  Anand patel
+                </span>
+              )}
             </h2>
           </div>
+
           <div className="mb-2">
             <h2 className="font-semibold text-gray-900 dark:text-gray-200 ml-2">
               Email:
-              <span className="font-normal text-gray-700 dark:text-gray-300 ml-2">
-                Anand@gmail.com
-              </span>
+              {isLoading ? (
+                <div className="w-40 h-4 bg-gray-300 rounded animate-pulse ml-2"></div>
+              ) : (
+                <span className="font-normal text-gray-700 dark:text-gray-300 ml-2">
+                  Anand@gmail.com
+                </span>
+              )}
             </h2>
           </div>
+
           <div className="mb-2">
             <h2 className="font-semibold text-gray-900 dark:text-gray-200 ml-2">
               Role:
-              <span className="font-normal text-gray-700 dark:text-gray-300 ml-2">
-                Instrucor
-              </span>
+              {isLoading ? (
+                <div className="w-24 h-4 bg-gray-300 rounded animate-pulse ml-2"></div>
+              ) : (
+                <span className="font-normal text-gray-700 dark:text-gray-300 ml-2">
+                  Instructor
+                </span>
+              )}
             </h2>
           </div>
+
           <Dialog>
             <DialogTrigger asChild>
               <Button variant="outline">Edit Profile</Button>
@@ -73,13 +94,19 @@ const Profile = () => {
                     type="text"
                     placeholder="Name"
                     className="col-span-3"
+                    disabled={isLoading} // Disable input if loading
                   />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="name" className="text-right">
                     Profile Photo
                   </Label>
-                  <Input type="file" accept="image/*" className="col-span-3" />
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    className="col-span-3"
+                    disabled={isLoading} // Disable input if loading
+                  />
                 </div>
               </div>
               <DialogFooter>
@@ -98,13 +125,22 @@ const Profile = () => {
           </Dialog>
         </div>
       </div>
+
       <div>
         <h1 className="font-medium text-lg">Courses you're enrolled in</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 my-5">
-          {emrolledCourses.length === 0 ? (
+          {isLoading ? (
+            // Skeleton for courses
+            Array.from({ length: 3 }).map((_, index) => (
+              <div
+                key={index}
+                className="h-32 bg-gray-300 rounded-lg animate-pulse"
+              ></div>
+            ))
+          ) : enrolledCourses.length === 0 ? (
             <h1>You Haven't enrolled yet</h1>
           ) : (
-            emrolledCourses.map((courses, index) => <Course key={index} />)
+            enrolledCourses.map((course, index) => <Course key={index} />)
           )}
         </div>
       </div>
