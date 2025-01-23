@@ -53,7 +53,9 @@ const Navbar = () => {
                   <DropdownMenuItem>
                     <Link to="my-learning">My Learning</Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>Edit profile</DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link to="my-profile">Edit profile</Link>
+                  </DropdownMenuItem>
                   <DropdownMenuItem>Log out</DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
@@ -103,7 +105,9 @@ const MobileNavbar = () => {
           <span>
             <Link to="my-learning">My Learning</Link>
           </span>
-          <span>Edit profile</span>
+          <span>
+            <Link to="my-profile">Edit profile</Link>
+          </span>
           <p>Log out</p>
         </nav>
         {role === "instructor" && (
