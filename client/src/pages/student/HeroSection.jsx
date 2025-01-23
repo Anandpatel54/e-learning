@@ -18,6 +18,7 @@ const HeroSection = () => {
           <Input
             className="flex-grow border-none focus-visible:ring-0 px-6 py-3 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
             type="text"
+            placeholder="Search Courses"
           />
           <Button className="bg-blue-600 dark:bg-blue-700 text-white px-6 py-3 rounded-r-full hover:bg-blue-700 dark:hover:bg-blue-800">
             Search
