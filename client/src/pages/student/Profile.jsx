@@ -15,8 +15,8 @@ import { Loader2 } from "lucide-react";
 import Course from "./Course";
 
 const Profile = () => {
-  const isLoading = false; // Set to `true` for demonstration, in a real scenario, fetch user data here
-  const enrolledCourses = [1,2,3]; // Example enrolled courses, you can fetch dynamically
+  const isLoading = false; 
+  const enrolledCourses = [1,2]
 
   return (
     <div className="max-w-4xl mx-auto my-24 px-4">
