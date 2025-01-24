@@ -13,10 +13,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import Course from "./Course";
+import { useLoadUserQuery } from "@/features/api/authApi";
+import CourseSkeleton from "./CourseSkeleton";
 
 const Profile = () => {
-  const isLoading = false; 
-  const enrolledCourses = [1,2]
+  const { data, isLoading } = useLoadUserQuery();
+  const enrolledCourses = [1, 2];
+  if (isLoading) return <h1>Profile Loading....</h1>;
+  const { user } = data;
+  console.log(data);
 
   return (
     <div className="max-w-4xl mx-auto my-24 px-4">
@@ -27,7 +32,9 @@ const Profile = () => {
             <div className="h-32 w-32 bg-gray-300 rounded-full animate-pulse"></div>
           ) : (
             <Avatar className="h-24 w-24 md:h-32 md:w-32 mb-4">
-              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarImage
+                src={user.photoUrl || "https://github.com/shadcn.png"}
+              />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           )}
@@ -41,7 +48,7 @@ const Profile = () => {
                 <div className="w-32 h-4 bg-gray-300 rounded animate-pulse ml-2"></div>
               ) : (
                 <span className="font-normal text-gray-700 dark:text-gray-300 ml-2">
-                  Anand patel
+                  {user.name}
                 </span>
               )}
             </h2>
@@ -54,7 +61,7 @@ const Profile = () => {
                 <div className="w-40 h-4 bg-gray-300 rounded animate-pulse ml-2"></div>
               ) : (
                 <span className="font-normal text-gray-700 dark:text-gray-300 ml-2">
-                  Anand@gmail.com
+                  {user.email}
                 </span>
               )}
             </h2>
@@ -67,7 +74,7 @@ const Profile = () => {
                 <div className="w-24 h-4 bg-gray-300 rounded animate-pulse ml-2"></div>
               ) : (
                 <span className="font-normal text-gray-700 dark:text-gray-300 ml-2">
-                  Instructor
+                  {user.role.toUpperCase()}
                 </span>
               )}
             </h2>
@@ -132,15 +139,14 @@ const Profile = () => {
           {isLoading ? (
             // Skeleton for courses
             Array.from({ length: 3 }).map((_, index) => (
-              <div
-                key={index}
-                className="h-32 bg-gray-300 rounded-lg animate-pulse"
-              ></div>
+              <CourseSkeleton key={index} />
             ))
-          ) : enrolledCourses.length === 0 ? (
+          ) : user.enrolledCourses.length === 0 ? (
             <h1>You Haven't enrolled yet</h1>
           ) : (
-            enrolledCourses.map((course, index) => <Course key={index} />)
+            user.enrolledCourses.map((course) => (
+              <Course course={course} key={course._id} />
+            ))
           )}
         </div>
       </div>

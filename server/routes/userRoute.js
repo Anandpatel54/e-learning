@@ -12,6 +12,6 @@ const router = express.Router();
 router.post("/register", register);
 router.post("/login", login);
 router.get("/logout", logout);
-router.get("/profile", getUserProfile);
+router.get("/profile", isAuthenticated, getUserProfile);
 
 export default router;
