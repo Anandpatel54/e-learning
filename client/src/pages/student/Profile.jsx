@@ -13,15 +13,63 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import Course from "./Course";
-import { useLoadUserQuery } from "@/features/api/authApi";
+import {
+  useLoadUserQuery,
+  useUpdateUserMutation,
+} from "@/features/api/authApi";
 import CourseSkeleton from "./CourseSkeleton";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const Profile = () => {
-  const { data, isLoading } = useLoadUserQuery();
-  const enrolledCourses = [1, 2];
-  if (isLoading) return <h1>Profile Loading....</h1>;
-  const { user } = data;
+  const [name, setName] = useState("");
+  const [profilePhoto, setProfilePhoto] = useState("");
+
+  const { data, isLoading, refetch } = useLoadUserQuery();
+  const [
+    updateUser,
+    {
+      data: updateUserData,
+      isLoading: updateUserIsLoading,
+      isError,
+      error,
+      isSuccess,
+    },
+  ] = useUpdateUserMutation();
+
   console.log(data);
+
+  const onChangeHandler = (e) => {
+    const file = e.target.files?.[0];
+    if (file) setProfilePhoto(file);
+  };
+
+  const updateHandlar = async () => {
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("profilePhoto", profilePhoto);
+    await updateUser(formData);
+  };
+
+  useEffect(() => {
+    refetch();
+  }, []);
+
+  useEffect(() => {
+    if (isSuccess) {
+      refetch();
+      toast.success(data.message || "Profile updated.");
+    }
+    if (isError) {
+      toast.error(error.message || "Failed to update profile");
+    }
+  }, [error, updateUserData, isSuccess, isError]);
+
+  if (isLoading) return <h1>Profile Loading...</h1>;
+
+  const user = data && data.user;
+
+  console.log(user);
 
   return (
     <div className="max-w-4xl mx-auto my-24 px-4">
@@ -99,6 +147,8 @@ const Profile = () => {
                   </Label>
                   <Input
                     type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     placeholder="Name"
                     className="col-span-3"
                     disabled={isLoading} // Disable input if loading
@@ -110,6 +160,7 @@ const Profile = () => {
                   </Label>
                   <Input
                     type="file"
+                    onChange={onChangeHandler}
                     accept="image/*"
                     className="col-span-3"
                     disabled={isLoading} // Disable input if loading
@@ -117,7 +168,7 @@ const Profile = () => {
                 </div>
               </div>
               <DialogFooter>
-                <Button disabled={isLoading}>
+                <Button onClick={updateHandlar} disabled={isLoading}>
                   {isLoading ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" /> please
