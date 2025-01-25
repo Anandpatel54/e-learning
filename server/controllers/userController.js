@@ -112,6 +112,7 @@ export const getUserProfile = async (req, res) => {
     });
   }
 };
+
 export const updateProfile = async (req, res) => {
   try {
     const userId = req.id;
