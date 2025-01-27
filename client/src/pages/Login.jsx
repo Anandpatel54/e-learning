@@ -48,7 +48,7 @@ const Login = () => {
     },
   ] = useLoginUserMutation();
 
-   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const changeInputHandlar = (e, type) => {
     const { name, value } = e.target;
@@ -70,7 +70,7 @@ const Login = () => {
     if (registerError) {
       toast.success(registerData.message || "Signup failed");
     }
-    if(loginIsSuccess && loginData){
+    if (loginIsSuccess && loginData) {
       toast.success(loginData.message || "Login successful.");
       navigate("/");
     }
@@ -87,7 +87,7 @@ const Login = () => {
   ]);
   return (
     <div className="flex items-center justify-center w-full mt-24">
-      <Tabs defaultValue="account" className="w-[400px]">
+      <Tabs defaultValue="login" className="w-[400px]">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="signup">Signup</TabsTrigger>
           <TabsTrigger value="login">Login</TabsTrigger>
