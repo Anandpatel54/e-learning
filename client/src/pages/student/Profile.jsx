@@ -81,7 +81,7 @@ const Profile = () => {
           ) : (
             <Avatar className="h-24 w-24 md:h-32 md:w-32 mb-4">
               <AvatarImage
-                src={user.photoUrl || "https://github.com/shadcn.png"}
+                src={user?.photoUrl || "https://github.com/shadcn.png"}
               />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
@@ -96,7 +96,7 @@ const Profile = () => {
                 <div className="w-32 h-4 bg-gray-300 rounded animate-pulse ml-2"></div>
               ) : (
                 <span className="font-normal text-gray-700 dark:text-gray-300 ml-2">
-                  {user.name}
+                  {user?.name}
                 </span>
               )}
             </h2>
@@ -109,7 +109,7 @@ const Profile = () => {
                 <div className="w-40 h-4 bg-gray-300 rounded animate-pulse ml-2"></div>
               ) : (
                 <span className="font-normal text-gray-700 dark:text-gray-300 ml-2">
-                  {user.email}
+                  {user?.email}
                 </span>
               )}
             </h2>
@@ -122,7 +122,7 @@ const Profile = () => {
                 <div className="w-24 h-4 bg-gray-300 rounded animate-pulse ml-2"></div>
               ) : (
                 <span className="font-normal text-gray-700 dark:text-gray-300 ml-2">
-                  {user.role.toUpperCase()}
+                  {user?.role?.toUpperCase()}
                 </span>
               )}
             </h2>
@@ -148,7 +148,7 @@ const Profile = () => {
                   <Input
                     type="text"
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={(e) => setName(e?.target?.value)}
                     placeholder="Name"
                     className="col-span-3"
                     disabled={isLoading} // Disable input if loading
