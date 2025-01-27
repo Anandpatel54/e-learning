@@ -168,8 +168,8 @@ const Profile = () => {
                 </div>
               </div>
               <DialogFooter>
-                <Button onClick={updateHandlar} disabled={isLoading}>
-                  {isLoading ? (
+                <Button onClick={updateHandlar} disabled={updateUserIsLoading}>
+                  {updateUserIsLoading ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" /> please
                       wait
