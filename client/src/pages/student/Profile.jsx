@@ -37,7 +37,7 @@ const Profile = () => {
     },
   ] = useUpdateUserMutation();
 
-  console.log(data);
+  //console.log(data);
 
   const onChangeHandler = (e) => {
     const file = e.target.files?.[0];
@@ -169,7 +169,7 @@ const Profile = () => {
               </div>
               <DialogFooter>
                 <Button onClick={updateHandlar} disabled={updateUserIsLoading}>
-                  {updateUserIsLoading ? (
+                  { updateUserIsLoading? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" /> please
                       wait
