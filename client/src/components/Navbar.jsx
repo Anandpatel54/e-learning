@@ -49,10 +49,14 @@ const Navbar = () => {
       {/*desktop verson */}
       <div className="md:flex max-w-5xl mx-auto hidden justify-between items-center gap-10 h-full">
         <div className="flex items-center gap-2">
-          <School size={"30"} />
-          <h1 className="hidden md:block font-extrabold text-2xl">
-            E-Learning
-          </h1>
+          <Link to="/">
+            <School size={"30"} />
+          </Link>
+          <Link to="/">
+            <h1 className="hidden md:block font-extrabold text-2xl">
+              E-Learning
+            </h1>
+          </Link>
         </div>
         {/* user icon and dark mode icon*/}
         <div className="flex items-center gap-4">
