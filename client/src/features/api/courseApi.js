@@ -8,7 +8,15 @@ export const courseApi = createApi({
     baseUrl: COURSE_API,
     credentials: "include",
   }),
-  endpoints: (builder)=>({
-    
-  })
+  endpoints: (builder) => ({
+    createCourse: builder.mutation({
+      query: ({ courseTitle, category }) => ({
+        url: "/",
+        method: "POST",
+        body: { courseTitle, category },
+      }),
+    }),
+  }),
 });
+
+export const { useCreateCourseMutation } = courseApi;

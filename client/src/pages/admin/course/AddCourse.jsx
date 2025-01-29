@@ -10,24 +10,34 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useCreateCourseMutation } from "@/features/api/courseApi";
 import { Loader2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const AddCourse = () => {
   const [courseTitle, setCourseTitle] = useState("");
   const [category, setCategory] = useState("");
 
+  const [createCourse, { data, error, isLoading, isSuccess }] =
+    useCreateCourseMutation();
+
   const navigete = useNavigate();
-  const isLoading = false;
 
   const getSelectedCategory = (value) => {
     setCategory(value);
   };
 
   const createCourseHandlar = async () => {
-    
+    await createCourse({ courseTitle, category });
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success(data?.message || "Course Created");
+    }
+  }, [isSuccess, error]);
 
   return (
     <div className="flex-1 mx-10">
