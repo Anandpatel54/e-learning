@@ -94,9 +94,12 @@ const Navbar = () => {
                 {user.role === "instructor" && (
                   <>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem className="cursor-pointer">
-                      Dashboard
-                    </DropdownMenuItem>
+                    <Link to="/admin/dashboard">
+                      {" "}
+                      <DropdownMenuItem className="cursor-pointer">
+                        Dashboard
+                      </DropdownMenuItem>
+                    </Link>
                   </>
                 )}
               </DropdownMenuContent>
