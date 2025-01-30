@@ -1,6 +1,5 @@
 import { Course } from "../models/courseModel.js";
-import { deleteMediaFromCloudinary } from "../utils/cloudinary.js";
-
+import { deleteMediaFromCloudinary, uploadMedia } from "../utils/cloudinary.js";
 
 export const createCourse = async (req, res) => {
   try {
@@ -77,10 +76,32 @@ export const editCourse = async (req, res) => {
     let courseThumbnail;
     if (thumbnail) {
       if (course.courseThumbnail) {
-        const publicId = course.courseThumbnail.split("/").pop().split(".")[0]
-        await deleteMediaFromCloudinary
+        const publicId = course.courseThumbnail.split("/").pop().split(".")[0];
+        await deleteMediaFromCloudinary(publicId); //delete old image
       }
     }
+
+    // upload thumbnil form clounery
+    courseThumbnail = await uploadMedia(thumbnail.path);
+
+    const updateData = {
+      courseTitle,
+      subTitle,
+      description,
+      category,
+      courseLevel,
+      coursePrice,
+      courseThumbnail: courseThumbnail?.secure_url,
+    };
+
+    course = await Course.findByIdAndUpdate(courseId, updateData, {
+      new: true,
+    });
+
+    return res.status(200).json({
+      message: "Course Update Successfully",
+      success: true,
+    });
   } catch (error) {
     return res.status(500).json({
       message: "Failed to get course",
