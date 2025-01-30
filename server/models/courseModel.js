@@ -6,12 +6,8 @@ const courseSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    subTitle: {
-      type: String,
-    },
-    description: {
-      type: String,
-    },
+    subTitle: { type: String },
+    description: { type: String },
     category: {
       type: String,
       required: true,
@@ -26,7 +22,7 @@ const courseSchema = new mongoose.Schema(
     courseThumbnail: {
       type: String,
     },
-    enrolledstudents: [
+    enrolledStudents: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",

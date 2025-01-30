@@ -6,47 +6,45 @@ export const createCourse = async (req, res) => {
     const { courseTitle, category } = req.body;
     if (!courseTitle || !category) {
       return res.status(400).json({
-        message: "Course title and Category are required.",
-        success: false,
+        message: "Course title and category is required.",
       });
     }
+
     const course = await Course.create({
       courseTitle,
       category,
       creator: req.id,
     });
+
     return res.status(201).json({
       course,
-      message: "Course Created",
+      message: "Course created.",
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: "Failed to create course",
-      success: "false",
     });
   }
 };
 
-export const getCreatorCourse = async (req, res) => {
+export const getCreatorCourses = async (req, res) => {
   try {
     const userId = req.id;
     const courses = await Course.find({ creator: userId });
     if (!courses) {
       return res.status(404).json({
         courses: [],
-        message: "Course not found.",
-        success: false,
+        message: "Course not found",
       });
     }
     return res.status(200).json({
       courses,
-      message: "Courses Found",
-      success: true,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
-      message: "Failed to get course",
-      success: "false",
+      message: "Failed to create course",
     });
   }
 };
