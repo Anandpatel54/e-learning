@@ -1,4 +1,6 @@
 import { Course } from "../models/courseModel.js";
+import { deleteMediaFromCloudinary } from "../utils/cloudinary.js";
+
 
 export const createCourse = async (req, res) => {
   try {
@@ -42,6 +44,43 @@ export const getCreatorCourse = async (req, res) => {
       message: "Courses Found",
       success: true,
     });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Failed to get course",
+      success: "false",
+    });
+  }
+};
+
+export const editCourse = async (req, res) => {
+  try {
+    const courseId = req.params.courseId;
+    const {
+      courseTitle,
+      subTitle,
+      description,
+      category,
+      courseLevel,
+      coursePrice,
+    } = req.body;
+    const thumbnail = req.file;
+
+    let course = await Course.findById();
+
+    if (!course) {
+      return res.status(404).json({
+        message: "Course not found",
+        success: false,
+      });
+    }
+
+    let courseThumbnail;
+    if (thumbnail) {
+      if (course.courseThumbnail) {
+        const publicId = course.courseThumbnail.split("/").pop().split(".")[0]
+        await deleteMediaFromCloudinary
+      }
+    }
   } catch (error) {
     return res.status(500).json({
       message: "Failed to get course",
