@@ -18,7 +18,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useEditCourseMutation } from "@/features/api/courseApi";
+import {
+  useEditCourseMutation,
+  useGetCourseByIdQuery,
+} from "@/features/api/courseApi";
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -38,6 +41,24 @@ const CourseTab = () => {
   const params = useParams();
   const courseId = params.courseId;
   const [privewThumbnail, setprivewThumbnail] = useState("");
+
+  const { data: courseByIdData, isLoading: courseByIdLoading } =
+    useGetCourseByIdQuery(courseId);
+
+  useEffect(() => {
+    if (courseByIdData?.course) {
+      const course = courseByIdData?.course;
+      setInput({
+        courseTitle: course.courseTitle,
+        subTitle: course.subTitle,
+        description: course.description,
+        category: course.category,
+        courseLevel: course.courseLevel,
+        coursePrice: course.coursePrice,
+        courseThumbnail: "",
+      });
+    }
+  }, [courseByIdData]);
 
   const [editCourse, { data, isLoading, isSuccess, error }] =
     useEditCourseMutation();
@@ -86,6 +107,8 @@ const CourseTab = () => {
       toast.error(error.data.message || "Failed to update course");
     }
   }, [isSuccess, error]);
+
+  if (courseByIdLoading) return <h1>Loaging....</h1>;
 
   const isPublished = false;
   return (
