@@ -2,11 +2,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const CreateLecture = () => {
+  const [lectureTitle, setLectureTitle] = useState("");
   const isLoading = false;
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
     <div className="flex-1 mx-10">
       <div className="mb-4">
@@ -24,24 +26,20 @@ const CreateLecture = () => {
           <Input
             type="text"
             name="courseTitle"
-            value={courseTitle}
-            onChange={(e) => setCourseTitle(e.target.value)}
-            placeholder="Your Course Name"
+            value={lectureTitle}
+            onChange={(e) => setLectureTitle(e.target.value)}
+            placeholder="Your Title Name"
           />
         </div>
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
-            onClick={() => navigete("/admin/course")}
+            onClick={() => navigate("/admin/course")}
             className="cursor-pointer"
           >
             Back
           </Button>
-          <Button
-            disabled={isLoading}
-            onClick={createCourseHandlar}
-            className="cursor-pointer"
-          >
+          <Button disabled={isLoading} className="cursor-pointer">
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
