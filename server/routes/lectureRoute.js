@@ -5,6 +5,6 @@ import upload from "../utils/multer.js";
 
 const router = express.Router();
 
-router.route("").post(isAuthenticated, createLecture);
+router.route("/:courseId/lecture").post(isAuthenticated, createLecture);
 
 export default router;
