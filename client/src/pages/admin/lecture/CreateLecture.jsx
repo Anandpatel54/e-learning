@@ -3,17 +3,21 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const CreateLecture = () => {
   const [lectureTitle, setLectureTitle] = useState("");
+  const params = useParams();
+  const courseId = params.courseId;
   const isLoading = false;
   const navigate = useNavigate();
+
+  const createLectureHandlar = () => {};
   return (
     <div className="flex-1 mx-10">
       <div className="mb-4">
         <h1 className="font-bold text-lg">
-          Let's add course, add some basic course details for your new course
+          Let's add lecture, add some basic details for your new lecture
         </h1>
         <p className="text-gray-600 text-xs mt-2">
           Fill out the fields below to get started. Be sure to provide accurate
@@ -34,19 +38,23 @@ const CreateLecture = () => {
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
-            onClick={() => navigate("/admin/course")}
+            onClick={() => navigate(`/admin/course/${courseId}`)}
             className="cursor-pointer"
           >
-            Back
+            Back to Course
           </Button>
-          <Button disabled={isLoading} className="cursor-pointer">
+          <Button
+            disabled={isLoading}
+            onClick={createLectureHandlar}
+            className="cursor-pointer"
+          >
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 Plesae Wait...
               </>
             ) : (
-              "Create"
+              "Create Lecture"
             )}
           </Button>
         </div>
