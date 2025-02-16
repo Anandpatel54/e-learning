@@ -1,18 +1,37 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useCreateLectureMutation, useGetCourseLectureQuery } from "@/features/api/lectureApi";
 import { Loader2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "sonner";
 
 const CreateLecture = () => {
   const [lectureTitle, setLectureTitle] = useState("");
   const params = useParams();
   const courseId = params.courseId;
-  const isLoading = false;
   const navigate = useNavigate();
 
-  const createLectureHandlar = () => {};
+  const [createLecture, { data, isLoading, error, isSuccess }] =
+    useCreateLectureMutation();
+
+    const {data:lectureData, isLoading:lectureLoading, } = useGetCourseLectureQuery(courseId)
+
+  const createLectureHandlar = async () => {
+    await createLecture({ lectureTitle, courseId });
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success(data.message);
+    }
+    if (error) {
+      toast.error(error.data.message);
+    }
+  }, [isSuccess, error]);
+  console.log(lectureData)
+
   return (
     <div className="flex-1 mx-10">
       <div className="mb-4">
@@ -31,7 +50,7 @@ const CreateLecture = () => {
             type="text"
             name="courseTitle"
             value={lectureTitle}
-            onChange={(e) => setLectureTitle(e.target.value)}
+            onChange={(e) => 
             placeholder="Your Title Name"
           />
         </div>

@@ -35,7 +35,7 @@ const Navbar = () => {
   const logoutHandler = async () => {
     await logoutUser();
   };
-  console.log(user);
+  //console.log(user);
 
   useEffect(() => {
     if (isSuccess) {
