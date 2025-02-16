@@ -39,7 +39,8 @@ const CreateLecture = () => {
         Let's add lecture, add some basic details for your new lecture
         </h1>
         <p className="text-gray-600 text-xs mt-2">
-          
+        Fill out the fields below to get started. Be sure to provide accurate
+        information to help learners understand what your course offers.
         </p>
       </div>
       <div className="space-y-4">
