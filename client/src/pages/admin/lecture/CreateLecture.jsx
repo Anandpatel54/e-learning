@@ -89,11 +89,11 @@ const CreateLecture = () => {
           {lectureLoading ? (
             <p>Loading Lecture...</p>
           ) : lectureError ? (
-            <p>Fialef to Load Lecture</p>
-          ) : lectureData.lectures.length === 0 ? (
-            <p>No Lectures Available</p>
+            <p>Fialed to Load Lecture</p>
           ) : (
-            <Lecture />
+            lectureData.lectures.map((lecture, index) => (
+              <Lecture key={lecture._id} lecture={lecture} index={index} />
+            ))
           )}
         </div>
       </div>
