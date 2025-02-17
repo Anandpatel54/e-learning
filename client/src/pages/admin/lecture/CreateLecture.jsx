@@ -24,6 +24,7 @@ const CreateLecture = () => {
     data: lectureData,
     isLoading: lectureLoading,
     isError: lectureError,
+    refetch,
   } = useGetCourseLectureQuery(courseId);
 
   const createLectureHandlar = async () => {
@@ -32,6 +33,7 @@ const CreateLecture = () => {
 
   useEffect(() => {
     if (isSuccess) {
+      refetch();
       toast.success(data.message);
     }
     if (error) {
@@ -92,7 +94,12 @@ const CreateLecture = () => {
             <p>Fialed to Load Lecture</p>
           ) : (
             lectureData.lectures.map((lecture, index) => (
-              <Lecture key={lecture._id} lecture={lecture} index={index} />
+              <Lecture
+                key={lecture._id}
+                lecture={lecture}
+                courseId={courseId}
+                index={index}
+              />
             ))
           )}
         </div>
