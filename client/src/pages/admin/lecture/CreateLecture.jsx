@@ -1,11 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useCreateLectureMutation, useGetCourseLectureQuery } from "@/features/api/lectureApi";
+import {
+  useCreateLectureMutation,
+  useGetCourseLectureQuery,
+} from "@/features/api/lectureApi";
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
+import Lecture from "./Lecture";
 
 const CreateLecture = () => {
   const [lectureTitle, setLectureTitle] = useState("");
@@ -16,7 +20,11 @@ const CreateLecture = () => {
   const [createLecture, { data, isLoading, error, isSuccess }] =
     useCreateLectureMutation();
 
-    const {data:lectureData, isLoading:lectureLoading, } = useGetCourseLectureQuery(courseId)
+  const {
+    data: lectureData,
+    isLoading: lectureLoading,
+    isError: lectureError,
+  } = useGetCourseLectureQuery(courseId);
 
   const createLectureHandlar = async () => {
     await createLecture({ lectureTitle, courseId });
@@ -30,17 +38,17 @@ const CreateLecture = () => {
       toast.error(error.data.message);
     }
   }, [isSuccess, error]);
-  console.log(lectureData)
+  console.log(lectureData);
 
   return (
     <div className="flex-1 mx-10">
       <div className="mb-4">
         <h1 className="font-bold text-lg">
-        Let's add lecture, add some basic details for your new lecture
+          Let's add lecture, add some basic details for your new lecture
         </h1>
         <p className="text-gray-600 text-xs mt-2">
-        Fill out the fields below to get started. Be sure to provide accurate
-        information to help learners understand what your course offers.
+          Fill out the fields below to get started. Be sure to provide accurate
+          information to help learners understand what your course offers.
         </p>
       </div>
       <div className="space-y-4">
@@ -76,6 +84,17 @@ const CreateLecture = () => {
               "Create Lecture"
             )}
           </Button>
+        </div>
+        <div className="mt-10">
+          {lectureLoading ? (
+            <p>Loading Lecture...</p>
+          ) : lectureError ? (
+            <p>Fialef to Load Lecture</p>
+          ) : lectureData.lectures.length === 0 ? (
+            <p>No Lectures Available</p>
+          ) : (
+            <Lecture />
+          )}
         </div>
       </div>
     </div>
