@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import connectDB from "./Database/db.js";
+import mediaRoute from "./routes/mediaRoute.js";
 import userRoute from "./routes/userRoute.js";
 import courseRoute from "./routes/courseRoute.js";
 import lectureRoute from "./routes/lectureRoute.js";
@@ -27,6 +28,7 @@ app.use(
 );
 
 // api
+app.use("/api/v1/media", mediaRoute);
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/course", courseRoute);
 app.use("/api/v1/lecture", lectureRoute);

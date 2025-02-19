@@ -51,3 +51,15 @@ export const getCouresLecture = async (req, res) => {
     });
   }
 };
+
+export const editLecture = async (req, res)=>{
+  try {
+    const {lectureTitle,vedipInfo, isPreviewFree} = req.body;
+    
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Failed to get lecture",
+    });
+  }
+}
