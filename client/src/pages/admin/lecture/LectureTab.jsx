@@ -24,7 +24,34 @@ const LectureTab = () => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [btnDisable, setBtnDisable] = useState(true);
 
-  
+  const fileChangeHandlar = async (e) => {
+    const file = e.target.file[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      setMediaProgress(true);
+      try {
+        const res = await axios.post(`${MEDIA_API}/upload-video`, formData, {
+          onUploadProgress: ({ loaded, total }) => {
+            setUploadProgress(Math.round((loaded * 100) / total));
+          },
+        });
+        if (res.data.success) {
+          setUploadVideoInfo({
+            videoUrl: res.data.data.url,
+            publicId: res.data.data.publicId,
+          });
+          setBtnDisable(false);
+          toast.success(res.data.message);
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error("Video upload failed");
+      } finally {
+        setMediaProgress(false);
+      }
+    }
+  };
 
   return (
     <Card>
