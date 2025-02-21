@@ -24,8 +24,8 @@ const LectureTab = () => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [btnDisable, setBtnDisable] = useState(true);
 
-  const fileChangeHandlar = async (e) => {
-    const file = e.target.file[0];
+  const fileChangeHandler = async (e) => {
+    const file = e.target.files[0];
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
@@ -36,23 +36,25 @@ const LectureTab = () => {
             setUploadProgress(Math.round((loaded * 100) / total));
           },
         });
+
         if (res.data.success) {
+          console.log(res);
           setUploadVideoInfo({
             videoUrl: res.data.data.url,
-            publicId: res.data.data.publicId,
+            publicId: res.data.data.public_id,
           });
           setBtnDisable(false);
           toast.success(res.data.message);
         }
       } catch (error) {
         console.log(error);
-        toast.error("Video upload failed");
+        toast.error("video upload failed");
       } finally {
         setMediaProgress(false);
       }
     }
   };
-
+  
   return (
     <Card>
       <CardHeader className="flex justify-between">
@@ -79,7 +81,7 @@ const LectureTab = () => {
             className="w-fit"
             type="file"
             accept="video/*"
-            onChange={fileChangeHandlar}
+            onChange={fileChangeHandler}
             placeholder="Ex. Introduction"
           />
         </div>
