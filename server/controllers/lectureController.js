@@ -52,9 +52,17 @@ export const getCouresLecture = async (req, res) => {
   }
 };
 
-export const editLecture = async (req, res)=>{
+export const editLecture = async (req, res) => {
   try {
-    const {lectureTitle,vedipInfo, isPreviewFree} = req.body;
+    const { lectureTitle, vedipInfo, isPreviewFree } = req.body;
+    const { courseId, lectureId } = req.params;
+    const lecture = await Lecture.findById(lectureId);
+    if (!lecture) {
+      return res.status(404).json({
+        message: "Lecture not Found",
+        success: false,
+      });
+    }
     
   } catch (error) {
     console.log(error);
@@ -62,4 +70,4 @@ export const editLecture = async (req, res)=>{
       message: "Failed to get lecture",
     });
   }
-}
+};
